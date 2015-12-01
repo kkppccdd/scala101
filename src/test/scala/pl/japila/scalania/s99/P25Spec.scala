@@ -1,0 +1,23 @@
+package pl.japila.scalania.s99
+
+import org.specs2.mutable._
+import org.junit.runner.RunWith
+import org.specs2.runner.JUnitRunner
+
+@RunWith(classOf[JUnitRunner])
+class P25Spec extends Specification with ExamplesBlock {
+  "P25 solution" should {
+    "Generate a random permutation of the elements of a list." in {
+      import S99_P25._
+      solutions[Symbol].foreach {
+        case (solution, randomPermuteImpl) =>
+          solution >> {
+            val input = List('a, 'b, 'c, 'd, 'e, 'f)
+            val randomPer = randomPermuteImpl(input)
+            input.intersect(randomPer) === input
+            randomPer.diff(input).size === 0
+          }
+      }
+    }
+  }
+}
